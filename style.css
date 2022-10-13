@@ -1,0 +1,36 @@
+body{
+    padding:0px;
+    margin:0px;
+    height: 100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:space-between;
+}
+.gameboard-field{
+    border: 1px solid black;
+    height: 6em;
+    width: 6em;
+}
+.gameboard{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+.main-container{
+    width:70vw;
+    display:flex;
+    align-items: center;
+    justify-content:space-between;
+}
+.scorecard{
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    align-items:center;
+}
+.points{
+    height: 50px
+}
+img{
+    height: 10em
+}
