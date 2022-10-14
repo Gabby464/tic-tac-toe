@@ -101,6 +101,7 @@ const Game = (() => {
         pointsDivPlayerTwo.innerHTML = "";
         imageOne.setAttribute("src", 'Images/icons8-finn.svg');
         imageTwo.setAttribute("src", 'Images/icons8-finn.svg');
+        statusElement.textContent = ""
     }
     const addpointsImage = (parentElement) => {
         const scoreImage = document.createElement('img');
@@ -139,7 +140,14 @@ const Game = (() => {
                     addpointsImage(pointsDivPlayerTwo)
                     winnerIsFound(PlayerTwo, PlayerOne)
                 }else if(fields.every(field => field.textContent != '' && !PlayerOne.checkIfwinner() && !PlayerTwo.checkIfwinner())){
-                    disableElement.setAttribute('style', 'display:inline')
+                    statusElement.textContent = "It's a tie :/"
+                    disableElement.setAttribute('style', 'display:inline');
+                    let lastPlayer;
+                    if(lastElement == PlayerOne.selectedSymbol){
+                        setTimeout(function(){statusElement.textContent = `${PlayerTwo.name}'s turn`}, '1200')
+                    }else{
+                        setTimeout(function(){statusElement.textContent = `${PlayerOne.name}'s turn`}, '1200')
+                    }
                     setTimeout(gameBoard.resetBoard, '1200');
                 }
             })
