@@ -9,8 +9,12 @@ body{
 }
 .gameboard-field{
     border: 1px solid black;
-    height: 6em;
-    width: 6em;
+    height:120px;
+    width: 120px;
+    display:flex;
+    justify-content: center;
+    text-align: center;
+    font-size: 100px;
 }
 .gameboard{
     display:grid;
@@ -33,4 +37,21 @@ body{
 }
 img{
     height: 10em
+}
+.disable-clicks, .full-screen-container{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 0;
+}
+.disable-clicks{
+    top: 180px;
+}
+.points>img{
+    width: 50px;
+}
+.full-screen-container{
+   background: rgba(90, 90, 90, 0.5);;
 }

@@ -11,12 +11,40 @@
 
 <body>
     <div class="disable-clicks" style="display:none"></div>
+    <div class="full-screen-container" style="display:none">
+    <div class="pop-up">
+        <form action="/script.js" id="game-form">
+            <span id="close-page">X</span>
+            <h2>New Game</h2>
+            <div class="input-field">
+                <label for="PlayerOne-Name">Player One's Name</label>
+                <input type="text" name="PlayerOne-Name" id="PlayerOne-Name" required>
+            </div>
+            <div class="input-field">
+                <label for="PlayerTwo-Name">Player Two's Name</label>
+                <input type="text" name="PlayerTwo-Name" id="PlayerTwo-Name" required>
+            </div>
+            <!-- <div class="input-field">
+                <label for="pages">No. of pages</label>
+                <input type="number" name="pages" id="pages" required="">
+            </div>
+            <div class="input-field">
+                <label for="read">Have you read this book?</label>
+                <input type="checkbox" name="read" id="read">
+            </div> -->
+            <button type="submit" id="submit-btn">Start Game</button>
+        </form>
+    </div>
+</div>
     <div class="header">
         <h1>Tic-Tac-Toe</h1>
     </div>
+    <p class="game-status"></p>
     <div class="menu">
+        <div class="buttons">
         <button class="start-game">Start</button>
         <button class="reset-game">Reset</button>
+    </div>
     </div>
     <div class="main-container">
         <div class="scorecard">
