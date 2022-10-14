@@ -6,7 +6,8 @@ const pointsDivPlayerOne = document.querySelector('.points.one');
 const pointsDivPlayerTwo = document.querySelector('.points.two');
 const imageOne = document.querySelector('.playerOneImage>img');
 const imageTwo = document.querySelector('.playerTwoImage>img');
-const disableElement = document.querySelector('.disable-clicks')
+const disableElement = document.querySelector('.disable-clicks');
+const statusElement = document.querySelector('.game-status');
 //get main logic
 const gameBoard = (() => {
     const getCurrentBoardContent = () => {
@@ -24,11 +25,13 @@ const gameBoard = (() => {
             element.addEventListener('click', function makeSelection(e) {
                 if (e.target.textContent !== 'x' && e.target.textContent !== 'o'){
                     if (lastElement !== 'x') {
+                        statusElement.textContent = `${PlayerTwo.name}'s turn`
                         imageOne.setAttribute('src', 'Images/icons8-finn copy.svg')
                         imageTwo.setAttribute('src', 'Images/icons8-finn.svg')
                         e.target.textContent = 'x';
                         lastElement = 'x'
                     } else if (lastElement !== 'o') {
+                        statusElement.textContent = `${PlayerOne.name}'s turn`
                         imageTwo.setAttribute('src', 'Images/icons8-finn copy.svg')
                         imageOne.setAttribute('src', 'Images/icons8-finn.svg')
                         e.target.textContent = 'o'
@@ -92,8 +95,8 @@ const Player = (name, selectedSymbol) => {
 const Game = (() => {
     const resetGame = () => {
         gameBoard.resetBoard();
-        John.score = 0;
-        Jim.score = 0;
+        PlayerOne.score = 0;
+        PlayerTwo.score = 0;
         pointsDivPlayerOne.innerHTML = "";
         pointsDivPlayerTwo.innerHTML = "";
         imageOne.setAttribute("src", 'Images/icons8-finn.svg');
@@ -105,13 +108,16 @@ const Game = (() => {
         parentElement.appendChild(scoreImage);
 
     }
-    const winnerIsFound = (winner) =>{
+    const winnerIsFound = (winner, loser) =>{
+        
         winner.score += 1;
         if(winner.score < 3){
+            statusElement.textContent = `${winner.name} wins the round!`
         disableElement.setAttribute('style', 'display:inline')
         setTimeout(gameBoard.resetBoard, '1800');
-        
+        setTimeout(function(){statusElement.textContent = `${loser.name}'s turn`}, '1800');
         }else{
+            statusElement.textContent = `${winner.name} wins the game!!`
             disableElement.setAttribute('style', 'display:inline')
             if (winner.name == 'johny') {
                imageOne.setAttribute('src', 'Images/icons8-finn.gif')
@@ -125,13 +131,14 @@ const Game = (() => {
         const fields = gameBoard.getCurrentBoardFields();
         fields.forEach(field => {
             field.addEventListener('click', () => {
-                if (John.checkIfwinner()) {
+                if (PlayerOne.checkIfwinner()) {
+                    
                     addpointsImage(pointsDivPlayerOne)
-                    winnerIsFound(John)
-                }else if(Jim.checkIfwinner()){
+                    winnerIsFound(PlayerOne, PlayerTwo);
+                }else if(PlayerTwo.checkIfwinner()){
                     addpointsImage(pointsDivPlayerTwo)
-                    winnerIsFound(Jim)
-                }else if(fields.every(field => field.textContent != '' && !John.checkIfwinner() && !Jim.checkIfwinner())){
+                    winnerIsFound(PlayerTwo, PlayerOne)
+                }else if(fields.every(field => field.textContent != '' && !PlayerOne.checkIfwinner() && !PlayerTwo.checkIfwinner())){
                     disableElement.setAttribute('style', 'display:inline')
                     setTimeout(gameBoard.resetBoard, '1200');
                 }
@@ -151,5 +158,5 @@ const Game = (() => {
 resetButton.addEventListener('click', (e) => {
     Game.resetGame()
 })
-const John = Player('johny', 'x');
-const Jim = Player('jimmy', 'o')
+const PlayerOne = Player('johny', 'x');
+const PlayerTwo = Player('jimmy', 'o')
