@@ -1,4 +1,9 @@
 body{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
     padding:0px;
     margin:0px;
     height: 100vh;
@@ -47,7 +52,7 @@ img{
     z-index: 0;
 }
 .disable-clicks{
-    top: 180px;
+    top: 220px;
 }
 .points>img{
     width: 50px;
