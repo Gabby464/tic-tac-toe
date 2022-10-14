@@ -1,5 +1,7 @@
 const gameBoardElement = document.querySelector('.gameboard');
 let lastElement = 'o';
+let PlayerOne;
+let PlayerTwo;
 const resetButton = document.querySelector('.reset-game');
 const boardElements = Array.from(gameBoardElement.querySelectorAll('.gameboard-field'))
 const pointsDivPlayerOne = document.querySelector('.points.one');
@@ -8,6 +10,9 @@ const imageOne = document.querySelector('.playerOneImage>img');
 const imageTwo = document.querySelector('.playerTwoImage>img');
 const disableElement = document.querySelector('.disable-clicks');
 const statusElement = document.querySelector('.game-status');
+const formElement = document.querySelector('form');
+const startGameButton = document.querySelector('.start-game');
+const popupWindow = document.querySelector('.full-screen-container')
 //get main logic
 const gameBoard = (() => {
     const getCurrentBoardContent = () => {
@@ -38,7 +43,6 @@ const gameBoard = (() => {
                         lastElement = 'o'
                     }
                     const currentBoard = getCurrentBoardContent();
-                    console.log(currentBoard)
                 }
             })
         })
@@ -53,17 +57,13 @@ const gameBoard = (() => {
         getCurrentBoardContent,
         getCurrentBoardFields,
         resetBoard,
-        editBoard
     }
 })();
 
-
-
-const Player = (name, selectedSymbol) => {
+const Player = (name, selectedSymbol, position) => {
     let score = 0;
     const checkIfwinner = () => {
         const board = gameBoard.getCurrentBoardContent();
-        console.log(gameBoard.getCurrentBoardContent())
         if (board[0] == selectedSymbol && board[1] == board[0] && board[2] == board[0]) {
             return true
         } else if (board[3] == selectedSymbol && board[4] == board[3] && board[5] == board[3]) {
@@ -88,6 +88,7 @@ const Player = (name, selectedSymbol) => {
         selectedSymbol,
         name,
         score,
+        position,
         checkIfwinner
     }
 }
@@ -101,7 +102,7 @@ const Game = (() => {
         pointsDivPlayerTwo.innerHTML = "";
         imageOne.setAttribute("src", 'Images/icons8-finn.svg');
         imageTwo.setAttribute("src", 'Images/icons8-finn.svg');
-        statusElement.textContent = ""
+        statusElement.textContent = "";
     }
     const addpointsImage = (parentElement) => {
         const scoreImage = document.createElement('img');
@@ -110,7 +111,6 @@ const Game = (() => {
 
     }
     const winnerIsFound = (winner, loser) =>{
-        
         winner.score += 1;
         if(winner.score < 3){
             statusElement.textContent = `${winner.name} wins the round!`
@@ -120,7 +120,7 @@ const Game = (() => {
         }else{
             statusElement.textContent = `${winner.name} wins the game!!`
             disableElement.setAttribute('style', 'display:inline')
-            if (winner.name == 'johny') {
+            if(winner.position === 'left') {
                imageOne.setAttribute('src', 'Images/icons8-finn.gif')
             }else{
                 imageTwo.setAttribute('src', 'Images/icons8-finn.gif')
@@ -133,7 +133,6 @@ const Game = (() => {
         fields.forEach(field => {
             field.addEventListener('click', () => {
                 if (PlayerOne.checkIfwinner()) {
-                    
                     addpointsImage(pointsDivPlayerOne)
                     winnerIsFound(PlayerOne, PlayerTwo);
                 }else if(PlayerTwo.checkIfwinner()){
@@ -152,7 +151,22 @@ const Game = (() => {
                 }
             })
         })
-        
+        const startANewGame = (() => {
+            startGameButton.addEventListener('click', () => {
+            popupWindow.setAttribute('style', 'display:flex')
+            })
+            formElement.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const PlayerOneName = document.getElementById('PlayerOne-Name').value;
+                const PlayerTwoName = document.getElementById('PlayerTwo-Name').value;
+                PlayerOne = Player(PlayerOneName, 'x', 'left');
+                PlayerTwo = Player(PlayerTwoName, 'o', 'right');
+                popupWindow.setAttribute('style', 'display:none');
+                formElement.reset();
+                resetGame();
+
+            })
+        })()
         
     })()
 
@@ -161,10 +175,9 @@ const Game = (() => {
         resetGame,
         checkForWinnersAndTie,
         winnerIsFound,
+
     }
 })()
 resetButton.addEventListener('click', (e) => {
     Game.resetGame()
 })
-const PlayerOne = Player('johny', 'x');
-const PlayerTwo = Player('jimmy', 'o')
