@@ -10,6 +10,7 @@
 </head>
 
 <body>
+    <div class="disable-clicks" style="display:none"></div>
     <div class="header">
         <h1>Tic-Tac-Toe</h1>
     </div>
@@ -23,11 +24,11 @@
             <p class="playerOneImage">
                 <img src="Images/icons8-finn copy.svg" alt="">
             </p>
-            <div class="points">
+            <div class="points one">
             </div>
         </div>
         <div class="gameboard">
-            <div class="gameboard-field" data-index="1"></div>
+            <div class="gameboard-field" data-index="1">X</div>
             <div class="gameboard-field" data-index="2"></div>
             <div class="gameboard-field" data-index="3"></div>
             <div class="gameboard-field" data-index="4"></div>
@@ -36,21 +37,20 @@
             <div class="gameboard-field" data-index="7"></div>
             <div class="gameboard-field" data-index="8"></div>
             <div class="gameboard-field" data-index="9"></div>
-
-
         </div>
         <div class="scorecard">
             <h2>Player Two</h2>
             <p class="playerTwoImage">
                 <img src="Images/icons8-finn copy.svg" alt=""">
             </p>
-            <div class="points">
+            <div class="points two">
                 
             </div>
         </div>
     </div>
     <div class="footer">
         <footer>This is my footer</footer>
+    </div>        
     </div>
     <script src="script.js"></script>
 </body>
