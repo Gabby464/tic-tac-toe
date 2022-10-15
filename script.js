@@ -13,6 +13,7 @@ const statusElement = document.querySelector('.game-status');
 const formElement = document.querySelector('form');
 const startGameButton = document.querySelector('.start-game');
 const popupWindow = document.querySelector('.full-screen-container')
+
 //get main logic
 const gameBoard = (() => {
     const getCurrentBoardContent = () => {
@@ -165,6 +166,13 @@ const Game = (() => {
                 formElement.reset();
                 resetGame();
 
+            })
+        })()
+        const closePopUp = (() => {
+            const closeElement = document.querySelector('#close-page')
+            closeElement.addEventListener('click', () =>{
+                popupWindow.setAttribute('style', 'display:none');
+                formElement.reset();
             })
         })()
         
