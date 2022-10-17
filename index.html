@@ -6,33 +6,35 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Mukta:wght@500&display=swap');
+    </style>
     <title>Tic-Tac-Toe</title>
 </head>
-
 <body>
     <div class="disable-clicks" style="display:inline"></div>
     <div class="full-screen-container" style="display:none">
-    <div class="pop-up">
-        <form action="/script.js" id="game-form">
-            <span id="close-page">X</span>
-            <h2>New Game</h2>
-            <div class="input-field">
-                <label for="PlayerOne-Name">Player One's Name</label>
-                <input type="text" name="PlayerOne-Name" id="PlayerOne-Name" required>
-            </div>
-            <div class="input-field">
-                <label for="PlayerTwo-Name">Player Two's Name</label>
-                <input type="text" name="PlayerTwo-Name" id="PlayerTwo-Name" required>
-            </div>
-            <button type="submit" id="submit-btn">Start Game</button>
-        </form>
+        <div class="pop-up">
+            <form action="/script.js" id="game-form">
+                <span id="close-page">X</span>
+                <h2>New Game</h2>
+                <div class="input-field">
+                    <label for="PlayerOne-Name">Player One's Name</label>
+                    <input type="text" name="PlayerOne-Name" id="PlayerOne-Name" required>
+                </div>
+                <div class="input-field">
+                    <label for="PlayerTwo-Name">Player Two's Name</label>
+                    <input type="text" name="PlayerTwo-Name" id="PlayerTwo-Name" required>
+                </div>
+                <button type="submit" id="submit-btn">Start Game</button>
+            </form>
 
-        <div class="botpopup">
-            <p>Or try beating the impossible Computer Bot?</p>
-            <button>Try the Computer</button>
+            <div class="botpopup">
+                <p>Or try beating the not-so-smart Computer Bot?</p>
+                <button>Try the Computer</button>
+            </div>
         </div>
     </div>
-</div>
     <div class="header">
         <h1>Tic-Tac-Toe</h1>
     </div>
@@ -40,9 +42,9 @@
     <div class="menu">
         <div class="disableScreen" style="display:none"></div>
         <div class="buttons">
-        <button class="start-game">Start New Game</button>
-        <button class="reset-game">Reset</button>
-    </div>
+            <button class="start-game">Start New Game</button>
+            <button class="reset-game">Reset</button>
+        </div>
     </div>
     <div class="main-container">
         <div class="scorecard">
@@ -69,14 +71,14 @@
             <p class="playerTwoImage">
                 <img src="Images/icons8-finn copy.svg" alt=""">
             </p>
-            <div class="points two">
-                
-            </div>
+            <div class=" points two">
+
         </div>
+    </div>
     </div>
     <div class="footer">
         <footer>This is my footer</footer>
-    </div>        
+    </div>
     </div>
     <script src="script.js" type="module"></script>
 </body>

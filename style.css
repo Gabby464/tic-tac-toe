@@ -12,6 +12,15 @@ body{
     align-items:center;
     justify-content:space-between;
 }
+*{
+    --rosso-corsa: #d80000ff;
+    --orange-soda: #fe5842ff;
+    --red: #ff0000ff;
+    --unbleached-silk: #fed2c3ff;
+    --light-salmon: #feab80ff;
+    font-family: 'Mukta', sans-serif;
+
+}
 .gameboard-field{
     border: 1px solid black;
     height:120px;
