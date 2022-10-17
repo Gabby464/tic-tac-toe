@@ -44,7 +44,7 @@ const gameBoard = (() => {
                     }
                 } else if (gameStarted) {
                     if (e.target.textContent == "") {
-                        if (lastElement === 'o') {
+                        if (lastPlayer.selectedSymbol === 'o') {
                             Game.makeSelectionAndChangeTurns(e.target, PlayerOne, PlayerTwo)
                         } else {
                             Game.makeSelectionAndChangeTurns(e.target, PlayerTwo, PlayerOne)
@@ -56,7 +56,7 @@ const gameBoard = (() => {
 
     })()
 
-    const resetBoard = () => {
+    const cleanBoard = () => {
         disableElement.setAttribute('style', 'display:none')
         boardElements.forEach(field => {
             field.textContent = ''
@@ -65,7 +65,7 @@ const gameBoard = (() => {
     return {
         getCurrentBoardContent,
         getCurrentBoardFields,
-        resetBoard,
+        cleanBoard,
         editBoard,
     }
 })();
@@ -74,21 +74,14 @@ const Player = (name, selectedSymbol, position) => {
     let score = 0;
     const checkIfwinner = () => {
         const board = gameBoard.getCurrentBoardContent();
-        if (board[0] == selectedSymbol && board[1] == board[0] && board[2] == board[0]) {
-            return true
-        } else if (board[3] == selectedSymbol && board[4] == board[3] && board[5] == board[3]) {
-            return true
-        } else if (board[6] == selectedSymbol && board[7] == board[6] && board[8] == board[6]) {
-            return true
-        } else if (board[0] == selectedSymbol && board[3] == board[0] && board[6] == board[0]) {
-            return true
-        } else if (board[1] == selectedSymbol && board[4] == board[1] && board[7] == board[1]) {
-            return true
-        } else if (board[2] == selectedSymbol && board[2] == board[5] && board[8] == board[2]) {
-            return true
-        } else if (board[0] == selectedSymbol && board[4] == board[0] && board[8] == board[0]) {
-            return true
-        } else if (board[2] == selectedSymbol && board[4] == board[2] && board[2] == board[6]) {
+        if (board[0] == selectedSymbol && board[1] == board[0] && board[2] == board[0] ||
+            board[3] == selectedSymbol && board[4] == board[3] && board[5] == board[3] ||
+            board[6] == selectedSymbol && board[7] == board[6] && board[8] == board[6] ||
+            board[0] == selectedSymbol && board[3] == board[0] && board[6] == board[0] ||
+            board[1] == selectedSymbol && board[4] == board[1] && board[7] == board[1] ||
+            board[2] == selectedSymbol && board[2] == board[5] && board[8] == board[2] ||
+            board[0] == selectedSymbol && board[4] == board[0] && board[8] == board[0] ||
+            board[2] == selectedSymbol && board[4] == board[2] && board[2] == board[6]) {
             return true
         } else {
             return false
@@ -102,12 +95,10 @@ const Player = (name, selectedSymbol, position) => {
         position,
         checkIfwinner,
     }
-
 }
-
 const Game = (() => {
     const resetGame = () => {
-        gameBoard.resetBoard();
+        gameBoard.cleanBoard();
         PlayerOne.score = 0;
         PlayerTwo.score = 0;
         pointsDivPlayerOne.innerHTML = "";
@@ -118,35 +109,36 @@ const Game = (() => {
         gameStarted = true;
         botsTurn = false;
     }
-     const disableFunctions = ()=>{
+    const showButtons = () => {
         disableScreen.setAttribute('style', 'display:inline');
     }
-    const enableFunctions = () => {
+    showButtons()//showed by default
+    const hideButtons = () => {
         disableScreen.setAttribute('style', 'display:none');
     }
     const addpointsImage = (parentElement) => {
         const scoreImage = document.createElement('img');
         scoreImage.setAttribute('src', 'Images/winnerIcon.svg');
         parentElement.appendChild(scoreImage);
-
     }
     const winnerIsFound = (winner, loser) => {
         winner.score += 1;
         if (winner.score < 3) {
+            Game.showButtons()
             statusElement.textContent = `${winner.name} wins the round!`
             disableElement.setAttribute('style', 'display:inline')
-            Game.disableFunctions()
-            setTimeout(gameBoard.resetBoard, '1200');
-            setTimeout(function () {
+            setTimeout(gameBoard.cleanBoard, '1200');
+            setTimeout(() => {
                 statusElement.textContent = `${loser.name}'s turn`
             }, '1200');
-            if(botsTurn){
-                setTimeout(AIBot.botOnBoard, '1200')
+            if (botsTurn) {
+                setTimeout(AIBot.botOnBoard, '2000')
             }
         } else {
             statusElement.textContent = `${winner.name} wins the game!!`
-            Game.disableFunctions()
             disableElement.setAttribute('style', 'display:inline')
+            Game.showButtons()
+
             if (winner.position === 'left') {
                 imageOne.setAttribute('src', 'Images/icons8-finn.gif')
             } else {
@@ -156,53 +148,47 @@ const Game = (() => {
 
     }
     const checkForWinnersAndTie = () => {
-        if (gameStarted) {
-            const fields = gameBoard.getCurrentBoardFields();
-            if (PlayerOne.checkIfwinner()){
-                addpointsImage(pointsDivPlayerOne)
-                winnerIsFound(PlayerOne, PlayerTwo);
-            } else if (PlayerTwo.checkIfwinner()) {
-                addpointsImage(pointsDivPlayerTwo)
-                winnerIsFound(PlayerTwo, PlayerOne)
-            } else if (fields.every(field => field.textContent != '' && !PlayerOne.checkIfwinner() && !PlayerTwo.checkIfwinner())) {
-                statusElement.textContent = "It's a tie :/"
-                Game.disableFunctions()
-                disableElement.setAttribute('style', 'display:inline');
-                if (lastElement == PlayerOne.selectedSymbol) {
-                    setTimeout(function () {
-                        statusElement.textContent = `${PlayerTwo.name}'s turn`
-                    }, '1200')
-                } else {
-                    setTimeout(function () {
-                        statusElement.textContent = `${PlayerOne.name}'s turn`
-                    }, '1200')
-                }
-                setTimeout(gameBoard.resetBoard, '1200');
-                if(botsTurn && playingWithBot){
-                    setTimeout(AIBot.botOnBoard, '2000')
-                }
-            }else {
-                if(botsTurn && playingWithBot){
+        const fields = gameBoard.getCurrentBoardFields();
+        if (PlayerOne.checkIfwinner()) {
+            addpointsImage(pointsDivPlayerOne)
+            winnerIsFound(PlayerOne, PlayerTwo);
+        } else if (PlayerTwo.checkIfwinner()) {
+            addpointsImage(pointsDivPlayerTwo)
+            winnerIsFound(PlayerTwo, PlayerOne)
+        } else if (fields.every(field => field.textContent != '' && !PlayerOne.checkIfwinner() && !PlayerTwo.checkIfwinner())) {
+            statusElement.textContent = "It's a tie :/"
+            Game.showButtons()
+            disableElement.setAttribute('style', 'display:inline');
+            if (lastElement == PlayerOne.selectedSymbol) {
+                setTimeout(function () {
+                    statusElement.textContent = `${PlayerTwo.name}'s turn`
+                }, '1200')
+            } else {
+                setTimeout(function () {
+                    statusElement.textContent = `${PlayerOne.name}'s turn`
+                }, '1200')
+            }
+            setTimeout(gameBoard.cleanBoard, '1200');
+            if (botsTurn && playingWithBot) {
+                setTimeout(AIBot.botOnBoard, '100')
+            }
+        } 
+        else{
+            if (botsTurn && playingWithBot) {
                 setTimeout(AIBot.botOnBoard, '1200')
             }
         }
-        }
-
-
     }
-    disableFunctions()
+
     const startANewGame = (isBotSelected) => {
         gameStarted = true;
-        if (!isBotSelected) {
-
-        } else {
+        if (isBotSelected) {
             playingWithBot = true
             PlayerOne = Player('Human', 'x', 'left');
             PlayerTwo = Player('Computer', 'o', 'right');
             popupWindow.setAttribute('style', 'display:none');
-            formElement.reset();
             resetGame();
-        }
+        } 
         disableElement.setAttribute('style', 'display:none')
     }
 
@@ -223,17 +209,14 @@ const Game = (() => {
             imageTwo.setAttribute('src', 'Images/icons8-finn copy.svg')
             imageOne.setAttribute('src', 'Images/icons8-finn.svg')
         }
-        lastElement = currentPlayer.selectedSymbol;
         element.textContent = currentPlayer.selectedSymbol;
         if (playingWithBot) {
             botsTurn = true
         }
         lastPlayer = currentPlayer;
-        console.log(lastPlayer)
         Game.checkForWinnersAndTie();
-
     }
-    
+
     return {
         resetGame,
         checkForWinnersAndTie,
@@ -241,8 +224,8 @@ const Game = (() => {
         startANewGame,
         closePopUp,
         makeSelectionAndChangeTurns,
-        disableFunctions,
-        enableFunctions
+        showButtons,
+        hideButtons
     }
 })()
 
@@ -250,7 +233,6 @@ const AIBot = (() => {
     botprompt.addEventListener('click', () => {
         Game.startANewGame(true)
         playingWithBot = true;
-
     })
     const getAiBotSelection = (gameArr) => {
         const possibleMoves = [];
@@ -263,23 +245,19 @@ const AIBot = (() => {
         return possibleMoves[randomIndex];
     }
     const botOnBoard = () => {
-        if(playingWithBot){
-        imageTwo.setAttribute('src', 'Images/icons8-finn copy.svg')
-        imageOne.setAttribute('src', 'Images/icons8-finn.svg')
-        statusElement.textContent = `${PlayerOne.name}'s turn`
-        const gameArr = gameBoard.getCurrentBoardContent();
-        const nextIndex = getAiBotSelection(gameArr);
-        gameBoard.getCurrentBoardFields()[nextIndex].textContent = 'o';
-        lastElement = 'o';
-        botsTurn = false;
-        lastPlayer = PlayerTwo
-        console.log(lastPlayer)
-        Game.checkForWinnersAndTie();
-        // Game.enableFunctions()
+        if (playingWithBot) {
+            imageTwo.setAttribute('src', 'Images/icons8-finn copy.svg')
+            imageOne.setAttribute('src', 'Images/icons8-finn.svg')
+            statusElement.textContent = `${PlayerOne.name}'s turn`
+            const gameArr = gameBoard.getCurrentBoardContent();
+            const nextIndex = getAiBotSelection(gameArr);
+            gameBoard.getCurrentBoardFields()[nextIndex].textContent = 'o';
+            botsTurn = false;
+            lastPlayer = PlayerTwo
+            console.log(lastPlayer)
+            Game.checkForWinnersAndTie();
         }
     }
-  
-
     return {
         getAiBotSelection,
         botOnBoard,
@@ -289,11 +267,11 @@ const AIBot = (() => {
 
 resetButton.addEventListener('click', (e) => {
     Game.resetGame()
-    Game.enableFunctions()
-})       
+    Game.hideButtons()
+})
 startGameButton.addEventListener('click', () => {
     popupWindow.setAttribute('style', 'display:flex');
-    Game.enableFunctions();
+    Game.hideButtons();
     disableElement.setAttribute('style', 'display:none');
     Game.startANewGame(false)
 })
@@ -307,4 +285,3 @@ formElement.addEventListener('submit', (e) => {
     formElement.reset();
     Game.resetGame();
 })
-
