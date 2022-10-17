@@ -43,7 +43,8 @@ body{
 img{
     height: 10em
 }
-.disable-clicks, .full-screen-container{
+.disable-clicks, 
+.full-screen-container{
     position: fixed;
     top: 0;
     bottom: 0;
@@ -60,3 +61,4 @@ img{
 .full-screen-container{
    background: rgba(90, 90, 90, 0.5);;
 }
+
