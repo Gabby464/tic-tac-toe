@@ -19,6 +19,7 @@ const startGameButton = document.querySelector('.start-game');
 const popupWindow = document.querySelector('.full-screen-container')
 const botprompt = document.querySelector('.botpopup>button')
 const disableScreen = document.querySelector('.buttons');
+const closeElement = document.querySelector('#close-page')
 
 
 const gameBoard = (() => {
@@ -159,7 +160,7 @@ const Game = (() => {
             statusElement.textContent = "It's a tie :/"
             Game.showButtons()
             disableElement.setAttribute('style', 'display:inline');
-            if (lastElement == PlayerOne.selectedSymbol) {
+            if ('o' == PlayerOne.selectedSymbol) {
                 setTimeout(function () {
                     statusElement.textContent = `${PlayerTwo.name}'s turn`
                 }, '1200')
@@ -188,17 +189,13 @@ const Game = (() => {
             PlayerTwo = Player('Computer', 'o', 'right');
             popupWindow.setAttribute('style', 'display:none');
             resetGame();
+            Game.showButtons();
+
         } 
         disableElement.setAttribute('style', 'display:none')
     }
 
-    const closePopUp = (() => {
-        const closeElement = document.querySelector('#close-page')
-        closeElement.addEventListener('click', () => {
-            popupWindow.setAttribute('style', 'display:none');
-            formElement.reset();
-        })
-    })()
+
     const makeSelectionAndChangeTurns = (element, currentPlayer, nextPlayer) => {
         disableScreen.setAttribute('style', 'display:none');
         statusElement.textContent = `${nextPlayer.name}'s turn`
@@ -222,7 +219,6 @@ const Game = (() => {
         checkForWinnersAndTie,
         winnerIsFound,
         startANewGame,
-        closePopUp,
         makeSelectionAndChangeTurns,
         showButtons,
         hideButtons
@@ -264,7 +260,7 @@ const AIBot = (() => {
     }
 })()
 
-
+const Listeners = (() => {
 resetButton.addEventListener('click', (e) => {
     Game.resetGame()
     Game.hideButtons()
@@ -281,7 +277,16 @@ formElement.addEventListener('submit', (e) => {
     const PlayerTwoName = document.getElementById('PlayerTwo-Name').value;
     PlayerOne = Player(PlayerOneName, 'x', 'left');
     PlayerTwo = Player(PlayerTwoName, 'o', 'right');
+    lastPlayer = PlayerTwo;
+    playingWithBot = false;
     popupWindow.setAttribute('style', 'display:none');
     formElement.reset();
     Game.resetGame();
 })
+    closeElement.addEventListener('click', () => {
+        popupWindow.setAttribute('style', 'display:none');
+        disableElement.setAttribute('style', 'display:inline');
+        disableScreen.setAttribute('style', 'display:inline')
+        formElement.reset();
+    })
+})()
