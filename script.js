@@ -111,7 +111,7 @@ const Game = (() => {
         botsTurn = false;
     }
     const showButtons = () => {
-        disableScreen.setAttribute('style', 'display:inline');
+        disableScreen.setAttribute('style', 'display:flex');
     }
     showButtons()//showed by default
     const hideButtons = () => {
@@ -286,7 +286,7 @@ formElement.addEventListener('submit', (e) => {
     closeElement.addEventListener('click', () => {
         popupWindow.setAttribute('style', 'display:none');
         disableElement.setAttribute('style', 'display:inline');
-        disableScreen.setAttribute('style', 'display:inline')
+        disableScreen.setAttribute('style', 'display:flex')
         formElement.reset();
     })
 })()
