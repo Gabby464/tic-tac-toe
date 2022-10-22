@@ -84,8 +84,8 @@ h1 {
 /* game content  */
 .main-container {
     display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center
 }
 
 .gameboard-field {
@@ -111,7 +111,9 @@ h1 {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
 }
-
+.gameboard-container{
+    display: flex;
+}
 .main-container {
     padding-bottom: 20px;
     width: 70vw;
@@ -262,7 +264,56 @@ form>button:hover {
 
 
 .footer {
-    margin-top: 1vh;
+    margin-top: 0.3vh;
     position: absolute;
     top: 0;
 }
+footer>a>img{
+    width: 20px;
+    height: 20px;
+}
+/* mobile  */
+@media only screen and (max-width: 900px) {
+    .header {
+        font-size: 5vw;
+    }
+        
+    .game-status {
+        font-size: 4.5vw;
+        color: var(--orange-soda)
+    }
+    
+    .buttons>button {
+        font-size: 2vw;
+    }
+    .playerTwoImage>img, .playerOneImage>img{
+        height:5em;width: 5em;
+    }
+
+    footer>a>img{
+        width: 1em;
+        height: 1em;
+    }
+    .scorecard.one{
+        order:1;
+    }
+    .scorecard.two{
+        order:1;
+    }
+ 
+    .main-container{
+        display: grid;
+        grid-template-rows: 1fr 1fr;
+    }
+    .gameboard-container{
+        order:2;
+        grid-column: 1 / 3;
+        justify-self: center;
+    }
+    .points>img {
+        height: 20px
+    }
+    body{
+        justify-content: unset;
+    }
+  }
