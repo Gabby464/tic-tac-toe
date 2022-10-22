@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,12 +11,12 @@
     <title>Tic-Tac-Toe</title>
 </head>
 <body>
-    <div class="disable-clicks" style="display:inline"></div>
     <div class="full-screen-container" style="display:none">
         <div class="pop-up">
             <form action="/script.js" id="game-form">
-                <span id="close-page">X</span>
-                <h2>New Game</h2>
+                <p>New Game <span id="close-page">X</span></p>
+               
+                
                 <div class="input-field">
                     <label for="PlayerOne-Name">Player One's Name</label>
                     <input type="text" name="PlayerOne-Name" id="PlayerOne-Name" required>
@@ -38,9 +37,9 @@
     <div class="header">
         <h1>Tic-Tac-Toe</h1>
     </div>
-    <p class="game-status"></p>
+    
     <div class="menu">
-        <div class="disableScreen" style="display:none"></div>
+        <p class="game-status"></p>
         <div class="buttons">
             <button class="start-game">Start New Game</button>
             <button class="reset-game">Reset</button>
@@ -55,16 +54,19 @@
             <div class="points one">
             </div>
         </div>
-        <div class="gameboard">
-            <div class="gameboard-field" data-index="0">X</div>
-            <div class="gameboard-field" data-index="1"></div>
-            <div class="gameboard-field" data-index="2"></div>
-            <div class="gameboard-field" data-index="3"></div>
-            <div class="gameboard-field" data-index="4"></div>
-            <div class="gameboard-field" data-index="5"></div>
-            <div class="gameboard-field" data-index="6"></div>
-            <div class="gameboard-field" data-index="7"></div>
-            <div class="gameboard-field" data-index="8"></div>
+        <div class="gameboard-container">
+            <div class="disable-clicks" style="display:unset"></div>
+            <div class="gameboard">
+                <div class="gameboard-field" data-index="0"></div>
+                <div class="gameboard-field" data-index="1"></div>
+                <div class="gameboard-field" data-index="2"></div>
+                <div class="gameboard-field" data-index="3"></div>
+                <div class="gameboard-field" data-index="4"></div>
+                <div class="gameboard-field" data-index="5"></div>
+                <div class="gameboard-field" data-index="6"></div>
+                <div class="gameboard-field" data-index="7"></div>
+                <div class="gameboard-field" data-index="8"></div>
+            </div>
         </div>
         <div class="scorecard">
             <h2>Player Two</h2>
@@ -76,9 +78,10 @@
         </div>
     </div>
     </div>
+   
+    </div>
     <div class="footer">
         <footer>This is my footer</footer>
-    </div>
     </div>
     <script src="script.js" type="module"></script>
 </body>
