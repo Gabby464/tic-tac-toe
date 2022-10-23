@@ -284,7 +284,7 @@ footer>a>img{
     }
     
     .buttons>button {
-        font-size: 2vw;
+        font-size: 3vw;
     }
     .playerTwoImage>img, .playerOneImage>img{
         height:5em;width: 5em;
@@ -302,8 +302,9 @@ footer>a>img{
     }
  
     .main-container{
+        width: unset;
         display: grid;
-        grid-template-rows: 1fr 1fr;
+        grid-template-rows: 0.5fr 1fr;
     }
     .gameboard-container{
         order:2;
