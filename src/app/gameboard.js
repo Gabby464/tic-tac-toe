@@ -1,7 +1,4 @@
 const gameBoard = (() => {
-    
-    const gameBoardElement = document.querySelector('.gameboard');
-    const boardElements = Array.from(gameBoardElement.querySelectorAll('.gameboard-field'))
     const getCurrentBoardContent = () => {
         const gameBoardFields = Array.from(gameBoardElement.querySelectorAll('.gameboard-field'))
         const boardContent = gameBoardFields.map((field) => field.textContent)
@@ -15,19 +12,19 @@ const gameBoard = (() => {
         const currentBoard = getCurrentBoardFields();
         currentBoard.forEach(element => {
             element.addEventListener('click', function makeSelection(e) {
-                if (playingWithBot && Game.gameStarted) {
+                if (playingWithBot && gameStarted) {
                     if (e.target.textContent == "" && !botsTurn) {
-                        Game.makeSelectionAndChangeTurns(e.target, Game.PlayerOne, Game.PlayerTwo);
+                        Game.makeSelectionAndChangeTurns(e.target, PlayerOne, PlayerTwo);
                     }
                     if (botsTurn) {
 
                     }
-                } else if (Game.gameStarted) {
+                } else if (gameStarted) {
                     if (e.target.textContent == "") {
                         if (lastPlayer.selectedSymbol === 'o') {
-                            Game.makeSelectionAndChangeTurns(e.target, Game.PlayerOne, Game.PlayerTwo)
+                            Game.makeSelectionAndChangeTurns(e.target, PlayerOne, PlayerTwo)
                         } else {
-                            Game.makeSelectionAndChangeTurns(e.target, Game.PlayerOne, Game.PlayerTwo)
+                            Game.makeSelectionAndChangeTurns(e.target, PlayerTwo, PlayerOne)
                         }
                     }
                 }

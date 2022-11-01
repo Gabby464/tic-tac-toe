@@ -1,26 +1,10 @@
 const Game = (() => {
-    let PlayerOne;
-    let PlayerTwo;
-    let lastPlayer;
-    let botsTurn = false;
-    let playingWithBot = false;
-    let gameStarted = false;
-    const _pointsDivPlayerOne = document.querySelector('.points.one');
-    const _pointsDivPlayerTwo = document.querySelector('.points.two');
-    const imageOne = document.querySelector('.playerOneImage>img');
-    const imageTwo = document.querySelector('.playerTwoImage>img');
-    const disableElement = document.querySelector('.disable-clicks');
-    const disableScreen = document.querySelector('.buttons');
-    const statusElement = document.querySelector('.game-status');
-    const popupWindow = document.querySelector('.full-screen-container')
-
-
     const resetGame = () => {
         gameBoard.cleanBoard();
         PlayerOne.score = 0;
         PlayerTwo.score = 0;
-        _pointsDivPlayerOne.innerHTML = "";
-        _pointsDivPlayerTwo.innerHTML = "";
+        pointsDivPlayerOne.innerHTML = "";
+        pointsDivPlayerTwo.innerHTML = "";
         imageOne.setAttribute("src", 'Images/icons8-finn.svg');
         imageTwo.setAttribute("src", 'Images/icons8-finn.svg');
         statusElement.textContent = `${PlayerOne.name} starts the game!`;
@@ -68,10 +52,10 @@ const Game = (() => {
     const checkForWinnersAndTie = () => {
         const fields = gameBoard.getCurrentBoardFields();
         if (PlayerOne.checkIfwinner()) {
-            addpointsImage(_pointsDivPlayerOne)
+            addpointsImage(pointsDivPlayerOne)
             winnerIsFound(PlayerOne, PlayerTwo);
         } else if (PlayerTwo.checkIfwinner()) {
-            addpointsImage(_pointsDivPlayerTwo)
+            addpointsImage(pointsDivPlayerTwo)
             winnerIsFound(PlayerTwo, PlayerOne)
         } else if (fields.every(field => field.textContent != '' && !PlayerOne.checkIfwinner() && !PlayerTwo.checkIfwinner())) {
             statusElement.textContent = "It's a tie :/"
@@ -132,16 +116,6 @@ const Game = (() => {
     }
 
     return {
-        disableScreen,
-        popupWindow,
-        statusElement,
-        disableElement,
-        imageOne,
-        imageTwo,
-        gameStarted,
-        botsTurn,
-        PlayerOne, PlayerTwo,
-        lastPlayer,
         resetGame,
         checkForWinnersAndTie,
         winnerIsFound,
